@@ -69,23 +69,25 @@ export default new class ScrapingService {
   }
 
   async generateCluster(maxConcurrency: number, headless: boolean): Promise<Cluster> {
+    let puppeteerOptions: any = {
+      //@ts-ignore
+      headless,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--disable-gpu'
+      ]
+    }
+    if(process.env.PROD === "TRUE") puppeteerOptions.executablePath = '/usr/bin/chromium-browser'
     const cluster: Cluster = await Cluster.launch({
       puppeteer,
       concurrency: Cluster.CONCURRENCY_CONTEXT,
       maxConcurrency,
-      puppeteerOptions: {
-        //@ts-ignore
-        headless,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--disable-gpu'
-        ]
-      }
+      puppeteerOptions
     });
     return cluster
   }
