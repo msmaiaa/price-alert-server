@@ -24,7 +24,7 @@ export default new class NotificationService {
         notificationMessage = 'preço aumentou'
       }
       if(user.notifyIfPriceGoesLower && change === "priceLower") {
-        notificationMessage = 'preço abaixo'
+        notificationMessage = 'preço abaixou'
       }
       if(user.notifyIfProductIsOOS && change === "outOfStock") {
         notificationMessage = 'produto fora de estoque'

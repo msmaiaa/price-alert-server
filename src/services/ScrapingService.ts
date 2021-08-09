@@ -57,7 +57,7 @@ export default new class ScrapingService {
     try{
       if(currentPrice === product.price) return
       if(currentPrice > product.price) {
-        await NotificationService.handlePrices(product, currentPrice, 'priceLower')
+        await NotificationService.handlePrices(product, currentPrice, 'priceHigher')
       }
       if(currentPrice < product.price) {
         await NotificationService.handlePrices(product, currentPrice, 'priceLower')
