@@ -29,7 +29,7 @@ interface InfinitePuppeterClusterParams {
 //still need to handle unavailable products
 export default new class ScrapingService {
   supportedStores = ["kabum", "pichau", "terabyte"]
-  storesThatChangePriceXpath = ["kabum", "pichau"]
+  storesThatChangePriceXpath = ["pichau"]
 
   async startInfiniteScraping () {
     const cluster = await this.generateCluster(1, true)
@@ -164,9 +164,6 @@ export default new class ScrapingService {
     if(store === 'pichau') {
       price = await this.handlePichauDiscount(page)  
     }
-    // else if (store === 'kabum') {
-    //   price = await this.handleKabumDiscount(page) 
-    // }
     return price
   }
 
@@ -179,19 +176,6 @@ export default new class ScrapingService {
     const price: string = await page.evaluate(el => el.innerText, normalPriceElement[pageIndex])
     return price
   }
-
-  // async handleKabumDiscount(page: vanillaPuppeteer.Page): Promise<string> {
-  //   let price: string = ''
-  //   const normalPriceElement: any = await page.$x(config.priceElement['kabum'])
-  //   if(normalPriceElement.length > 0) {
-  //     price = await page.evaluate(el => el.innerText, normalPriceElement[0])
-  //     return price
-  //   }
-  //   const priceElementWithDiscount: any = await page.$x(config.priceElementWithPromo['kabum'])
-  //   console.log(priceElementWithDiscount.length)
-  //   price = await page.evaluate(el => el.innerText, priceElementWithDiscount[0])
-  //   return price
-  // }
 
   detectStore (url: string): string | boolean {
     for(let store of this.supportedStores) {

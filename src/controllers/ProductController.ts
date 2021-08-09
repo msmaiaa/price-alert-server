@@ -21,7 +21,6 @@ export default new class ProductController {
       res.status(200).send({message: 'Adding products to the database'})
       const productsWithInfo = await ScrapingService.getManyProductsInfo(req.body.products)
       await ProductService.insertProducts({userid, products: productsWithInfo})
-      return
     }catch(e) {
       console.error(e)
       return res.status(500).send({ message: 'Error while trying to add product' })
