@@ -40,7 +40,7 @@ export default new class ScrapingService {
           await page.goto(product.url)
           const notFormattedPrice = await this.getProductPrice(product.store, page)
           const formattedPrice = Accounting.formatPriceToFloat(notFormattedPrice)
-          await this.handleProductChange(product, formattedPrice)
+          if (formattedPrice > 0) await this.handleProductChange(product, formattedPrice)
         })
       }
       //waits until all the cluster tasks are fulfilled
